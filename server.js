@@ -13,7 +13,7 @@ var corsOptions = {
 };
 
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // parse requests of content-type - application/json
