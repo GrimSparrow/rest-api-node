@@ -1,7 +1,6 @@
 const db = require("../models");
 const Employer = db.employers;
 
-// Create and Save a new Tutorial
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.name) {
@@ -9,7 +8,6 @@ exports.create = (req, res) => {
       return;
     }
   
-    // Create a Employer
     const employer = new Employer({
       name: req.body.name,
       position: req.body.position,
@@ -21,7 +19,6 @@ exports.create = (req, res) => {
       youtube: req.body.youtube
     });
   
-    // Save Tutorial in the database
     employer
       .save(employer)
       .then(data => {
@@ -30,25 +27,40 @@ exports.create = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while creating the Employer."
+            err.message || "Возникла какая-то ошибка пр создании сотрудника, повторите позже."
         });
       });
   };
 
-// Find a single Tutorial with an id
+  
+exports.findAll = (req, res) => {
+  var condition =  {};
+
+  Employer.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Возникла проблема при попытке получить список сотрудников."
+      });
+    });
+};
+
 exports.findOne = (req, res) => {
     const id = req.params.id;
   
     Employer.findById(id)
       .then(data => {
         if (!data)
-          res.status(404).send({ message: "Not found Employer with id " + id });
+          res.status(404).send({ message: "Сотрудник найден ID: " + id });
         else res.send(data);
       })
       .catch(err => {
         res
           .status(500)
-          .send({ message: "Error retrieving Employer with id=" + id });
+          .send({ message: "Проблема с получением сотрудника ID=" + id });
       });
   };
 
@@ -66,13 +78,13 @@ exports.update = (req, res) => {
       .then(data => {
         if (!data) {
           res.status(404).send({
-            message: `Cannot update Employer with id=${id}. Maybe Employer was not found!`
+            message: `Невозможно обновить сотрудника с id=${id}. Возможно он не был найден!`
           });
-        } else res.send({ message: "Employer was updated successfully." });
+        } else res.send({ message: "Сотрудник успешно обновлен." });
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Employer with id=" + id
+          message: "Проблема с измегнением сотрудника ID=" + id
         });
       });
   };
@@ -85,17 +97,17 @@ exports.delete = (req, res) => {
       .then(data => {
         if (!data) {
           res.status(404).send({
-            message: `Cannot delete Employer with id=${id}. Maybe Employer was not found!`
+            message: `Невозможно удалить сотрудника c ID =${id}. Возможно он не был найден!`
           });
         } else {
           res.send({
-            message: "Employer was deleted successfully!"
+            message: "Сотрудник успешно удален!"
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Employer with id=" + id
+          message: "Не удалось удалить сотрудника с ID =" + id
         });
       });
   };
@@ -105,13 +117,13 @@ exports.deleteAll = (req, res) => {
     Employer.deleteMany({})
       .then(data => {
         res.send({
-          message: `${data.deletedCount} Employers were deleted successfully!`
+          message: `${data.deletedCount} Сотрудники были успешно удалены!`
         });
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while removing all Employers."
+            err.message || "Возникли проблемы при удалении сотрудников"
         });
       });
   };

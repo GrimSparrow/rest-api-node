@@ -1,0 +1,238 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "Cynops REST API",
+        "description": "Информация о используемых методах API",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/",
+            "description": "Local Dev, or from Heroku"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Employers",
+            "description": "Методы контроллера сотрудников"
+        }
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+
+        "/api/employers/": {
+            "get": {
+                "tags": [
+                    "Employers"
+                ],
+                "summary": "Получить всех сотрудников",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employers"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Employers"
+                ],
+                "summary": "Создать сотрудника",
+                "requestBody": {
+                    "description": "Сотрудник",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Employer"
+                            }
+                        }
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },        
+        "/api/employers/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID сотрудника которого хотим подтянуть",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Employers"
+                ],
+                "summary": "Получить сотрудника с указанным ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Сотрудник с ID",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employer"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Сотрудник не найден."
+                    }
+                }
+            },
+            "put": {
+                "summary": "Изменить указанного сотрудника",
+                "tags": [
+                    "Employers"
+                ],
+                "requestBody": {
+                    "description": "Employer",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/definitions/Employer"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Измененный сотрудник",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Employer"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Некорректные данные."
+                    },
+                    "404": {
+                        "description": "Failed. Сотрудник не найден."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Удаление сотрудника с указанным ID",
+                "tags": [
+                    "Employers"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Удалить сотрудника с указанным ID",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/id"
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Сотрудник не найден."
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "id": {
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "Employer": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "string"
+                },
+                "discription": {
+                    "type": "string"
+                },
+                "about": {
+                    "type": "string"
+                },
+                "facebook": {
+                    "type": "string"
+                },
+                "instagram": {
+                    "type": "string"
+                },
+                "vk": {
+                    "type": "string"
+                },
+                "youtube": {
+                    "type": "string"
+                }
+            }
+        },
+        "Employers": {
+            "type": "object",
+            "properties": {
+                "Employers": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/Employer"
+                    }
+                }
+            }
+        }
+    }
+}
