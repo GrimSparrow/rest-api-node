@@ -12,7 +12,11 @@
     "servers": [
         {
             "url": "http://localhost:3000/",
-            "description": "Local Dev, or from Heroku"
+            "description": "Local URL"
+        }
+        {
+            "url": "https://cynopsrestapi.herokuapp.com/",
+            "description": "Heroku URL"
         }
     ],
     "tags": [
