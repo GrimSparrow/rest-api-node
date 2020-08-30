@@ -13,7 +13,7 @@
         {
             "url": "http://localhost:3000/",
             "description": "Local URL"
-        }
+        },
         {
             "url": "https://cynopsrestapi.herokuapp.com/",
             "description": "Heroku URL"
