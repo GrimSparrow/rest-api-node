@@ -207,7 +207,7 @@
                 "position": {
                     "type": "string"
                 },
-                "description": {
+                "discription": {
                     "type": "string"
                 },
                 "about": {
